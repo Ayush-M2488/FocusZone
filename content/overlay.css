@@ -1,0 +1,153 @@
+/* Site Blocker Overlay Styles */
+
+@keyframes bst-gradual-redden {
+    from {
+        background-color: rgba(220, 38, 38, 0);
+        backdrop-filter: blur(0px);
+    }
+    to {
+        background-color: rgba(220, 38, 38, 0.7);
+        backdrop-filter: blur(8px);
+    }
+}
+
+@keyframes bst-modal-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes bst-fade-out {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+#bst-blocker-overlay {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 2147483647 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    animation-name: bst-gradual-redden !important;
+    animation-timing-function: linear !important;
+    animation-fill-mode: forwards !important;
+    pointer-events: none !important; /* THIS IS THE CRITICAL FIX FOR CSS */
+}
+
+.bst-blocker-modal {
+    display: none; 
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 100% !important;
+    pointer-events: auto !important; /* This makes the modal itself clickable again */
+}
+
+.bst-modal-content {
+    background: rgba(0, 0, 0, 0.18) !important;
+    color: #f3f4f6 !important;
+    border-radius: 12px !important;
+    padding: 32px !important;
+    max-width: 420px !important;
+    width: 90% !important;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+    text-align: center !important;
+    animation: bst-modal-fade-in 0.3s ease-out forwards !important;
+    opacity: 1 !important;
+}
+
+.bst-modal-icon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 20px auto !important;
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.bst-modal-icon svg {
+    width: 24px;
+    height: 24px;
+    color: #f44336 !important;
+}
+
+.bst-modal-title {
+    font-size: 20px !important;
+    font-weight: 600 !important;
+    margin: 0 0 12px 0 !important;
+    color: #fff !important;
+}
+
+.bst-modal-subtitle {
+    font-size: 14px !important;
+    color: #d1d5db !important;
+    margin: 0 0 24px 0 !important;
+    line-height: 1.5 !important;
+}
+
+.bst-modal-subtitle strong {
+    font-weight: 500 !important;
+    color: #fff !important;
+    text-transform: capitalize;
+}
+
+.bst-stay-focused {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background-color: #4338ca !important;
+    color: #fff !important;
+    padding: 10px 20px !important;
+    border-radius: 8px !important;
+    border: none !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+    transition: background-color 0.2s ease-in-out !important;
+    margin-bottom: 16px !important;
+}
+
+.bst-stay-focused svg {
+    width: 16px !important;
+    height: 16px !important;
+    margin-right: 8px !important;
+}
+
+.bst-stay-focused:hover {
+    background-color: #3730a3 !important;
+}
+
+.bst-extension-info {
+    font-size: 12px !important;
+    color: #9ca3af !important;
+    margin-bottom: 16px !important;
+}
+
+.bst-modal-footer {
+    font-size: 11px !important;
+    color: #6b7280 !important;
+    margin: 0 !important;
+}
+
+/* **MODIFIED: Added new helper class to robustly disable scrolling** */
+.bst-no-scroll {
+    overflow: hidden !important;
+}

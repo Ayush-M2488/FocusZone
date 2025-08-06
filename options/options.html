@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browser Session Tracker - Settings</title>
+    <link rel="stylesheet" href="options.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Browser Session Tracker Settings</h1>
+            <nav>
+                <button class="nav-btn active" data-tab="sessions">Session Types</button>
+                <button class="nav-btn" data-tab="schedules">Schedules</button>
+                <button class="nav-btn" data-tab="general">General</button>
+                <button class="nav-btn" data-tab="data">Data Management</button>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Session Types Tab -->
+            <section id="sessions-tab" class="tab-content active">
+                <div class="section-header">
+                    <h2>Session Type Configuration</h2>
+                    <p>Configure allowed and blocked websites for each session type.</p>
+                </div>
+
+                <div class="session-types">
+                    <div class="session-type-card" data-type="work">
+                        <div class="card-header">
+                            <h3>Work Sessions</h3>
+                            <span class="session-icon">💼</span>
+                        </div>
+                        <div class="card-content">
+                            <div class="site-lists">
+                                <div class="site-list">
+                                    <label>Allowed Websites:</label>
+                                    <textarea id="work-allowed" placeholder="Enter domains separated by commas or new lines&#10;Example: github.com, stackoverflow.com, docs.google.com"></textarea>
+                                </div>
+                                <div class="site-list">
+                                    <label>Blocked Websites:</label>
+                                    <textarea id="work-blocked" placeholder="Enter domains separated by commas or new lines&#10;Example: example.com, twitter.com, youtube.com"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="session-type-card" data-type="study">
+                        <div class="card-header">
+                            <h3>Study Sessions</h3>
+                            <span class="session-icon">📚</span>
+                        </div>
+                        <div class="card-content">
+                            <div class="site-lists">
+                                <div class="site-list">
+                                    <label>Allowed Websites:</label>
+                                    <textarea id="study-allowed" placeholder="Enter domains separated by commas or new lines&#10;Example: wikipedia.org, khan academy.org, coursera.org"></textarea>
+                                </div>
+                                <div class="site-list">
+                                    <label>Blocked Websites:</label>
+                                    <textarea id="study-blocked" placeholder="Enter domains separated by commas or new lines&#10;Example: reddit.com, instagram.com, tiktok.com"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="session-type-card" data-type="break">
+                        <div class="card-header">
+                            <h3>Break Sessions</h3>
+                            <span class="session-icon">☕</span>
+                        </div>
+                        <div class="card-content">
+                            <div class="site-lists">
+                                <div class="site-list">
+                                    <label>Allowed Websites:</label>
+                                    <textarea id="break-allowed" placeholder="Enter domains separated by commas or new lines&#10;Example: youtube.com, netflix.com, spotify.com"></textarea>
+                                </div>
+                                <div class="site-list">
+                                    <label>Blocked Websites:</label>
+                                    <textarea id="break-blocked" placeholder="Enter domains separated by commas or new lines&#10;Example: work-email.com, slack.com"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="session-type-card" data-type="personal">
+                        <div class="card-header">
+                            <h3>Personal Sessions</h3>
+                            <span class="session-icon">🏠</span>
+                        </div>
+                        <div class="card-content">
+                            <div class="site-lists">
+                                <div class="site-list">
+                                    <label>Allowed Websites:</label>
+                                    <textarea id="personal-allowed" placeholder="Enter domains separated by commas or new lines&#10;Example: gmail.com, amazon.com, banking.com"></textarea>
+                                </div>
+                                <div class="site-list">
+                                    <label>Blocked Websites:</label>
+                                    <textarea id="personal-blocked" placeholder="Enter domains separated by commas or new lines&#10;Example: work-tools.com, company-intranet.com"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button id="save-sessions" class="btn btn-primary">Save Session Configurations</button>
+                    <button id="reset-sessions" class="btn btn-secondary">Reset to Defaults</button>
+                </div>
+            </section>
+
+            <!-- Schedules Tab -->
+            <section id="schedules-tab" class="tab-content">
+                <div class="section-header">
+                    <h2>Session Schedules</h2>
+                    <p>Set up automatic session starts based on time schedules.</p>
+                </div>
+
+                <div class="schedule-controls">
+                    <button id="add-schedule" class="btn btn-primary">+ Add New Schedule</button>
+                </div>
+
+                <div class="schedules-list" id="schedules-list">
+                    <!-- Schedules will be dynamically added here -->
+                </div>
+
+                <!-- Add Schedule Modal -->
+                <div id="schedule-modal" class="modal" style="display: none;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3>Add New Schedule</h3>
+                            <button class="modal-close" id="close-modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="schedule-form">
+                                <div class="form-group">
+                                    <label for="schedule-name">Schedule Name:</label>
+                                    <input type="text" id="schedule-name" placeholder="e.g., Morning Work Session" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="schedule-type">Session Type:</label>
+                                    <select id="schedule-type" required>
+                                        <option value="work">Work</option>
+                                        <option value="study">Study</option>
+                                        <option value="break">Break</option>
+                                        <option value="personal">Personal</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="schedule-time">Start Time:</label>
+                                    <input type="time" id="schedule-time" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="schedule-duration">Duration (minutes):</label>
+                                    <input type="number" id="schedule-duration" min="5" max="480" value="60" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Days of Week:</label>
+                                    <div class="days-selector">
+                                        <label class="day-checkbox">
+                                            <input type="checkbox" value="1"> Monday
+                                        </label>
+                                        <label class="day-checkbox">
+                                            <input type="checkbox" value="2"> Tuesday
+                                        </label>
+                                        <label class="day-checkbox">
+                                            <input type="checkbox" value="3"> Wednesday
+                                        </label>
+                                        <label class="day-checkbox">
+                                            <input type="checkbox" value="4"> Thursday
+                                        </label>
+                                        <label class="day-checkbox">
+                                            <input type="checkbox" value="5"> Friday
+                                        </label>
+                                        <label class="day-checkbox">
+                                            <input type="checkbox" value="6"> Saturday
+                                        </label>
+                                        <label class="day-checkbox">
+                                            <input type="checkbox" value="0"> Sunday
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="schedule-enabled">
+                                        <input type="checkbox" id="schedule-enabled" checked> Enabled
+                                    </label>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" id="cancel-schedule">Cancel</button>
+                            <button type="submit" form="schedule-form" class="btn btn-primary">Save Schedule</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button id="save-schedules" class="btn btn-primary">Save All Schedules</button>
+                    <button id="clear-schedules" class="btn btn-danger">Clear All Schedules</button>
+                </div>
+            </section>
+
+            <!-- General Tab -->
+            <section id="general-tab" class="tab-content">
+                <div class="section-header">
+                    <h2>General Settings</h2>
+                    <p>Configure general behavior and preferences.</p>
+                </div>
+
+                <div class="settings-grid">
+                    <div class="setting-item">
+                        <label for="warning-delay">Warning Delay (seconds):</label>
+                        <input type="number" id="warning-delay" min="10" max="300" value="60">
+                        <small>Time before showing warning overlay for non-allowed sites</small>
+                    </div>
+
+                    <div class="setting-item">
+                        <label for="auto-stop">Auto-stop inactive sessions:</label>
+                        <input type="checkbox" id="auto-stop" checked>
+                        <small>Automatically stop sessions after extended inactivity</small>
+                    </div>
+
+                    <div class="setting-item">
+                        <label for="inactivity-timeout">Inactivity timeout (minutes):</label>
+                        <input type="number" id="inactivity-timeout" min="5" max="120" value="30">
+                        <small>Minutes of inactivity before auto-stopping session</small>
+                    </div>
+
+                    <div class="setting-item">
+                        <label for="notifications">Show notifications:</label>
+                        <input type="checkbox" id="notifications" checked>
+                        <small>Display browser notifications for session events</small>
+                    </div>
+
+                    <div class="setting-item">
+                        <label for="sound-alerts">Sound alerts:</label>
+                        <input type="checkbox" id="sound-alerts">
+                        <small>Play sound when showing warning overlays</small>
+                    </div>
+
+                    <div class="setting-item">
+                        <label for="data-retention">Data retention (days):</label>
+                        <input type="number" id="data-retention" min="7" max="365" value="90">
+                        <small>How long to keep session history data</small>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button id="save-general" class="btn btn-primary">Save General Settings</button>
+                    <button id="reset-general" class="btn btn-secondary">Reset to Defaults</button>
+                </div>
+            </section>
+
+            <!-- Data Management Tab -->
+            <section id="data-tab" class="tab-content">
+                <div class="section-header">
+                    <h2>Data Management</h2>
+                    <p>Manage your session data and privacy settings.</p>
+                </div>
+
+                <div class="data-stats">
+                    <div class="stat-card">
+                        <h3>Storage Usage</h3>
+                        <div class="stat-value" id="storage-usage">Calculating...</div>
+                        <small>Total data stored</small>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total Sessions</h3>
+                        <div class="stat-value" id="total-sessions">0</div>
+                        <small>All time</small>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Oldest Session</h3>
+                        <div class="stat-value" id="oldest-session">-</div>
+                        <small>First recorded session</small>
+                    </div>
+                </div>
+
+                <div class="data-actions">
+                    <div class="action-group">
+                        <h3>Export Data</h3>
+                        <p>Download your session data for backup or analysis.</p>
+                        <div class="action-buttons">
+                            <button id="export-json" class="btn btn-outline">Export as JSON</button>
+                            <button id="export-csv" class="btn btn-outline">Export as CSV</button>
+                        </div>
+                    </div>
+
+                    <div class="action-group">
+                        <h3>Import Data</h3>
+                        <p>Import previously exported session data.</p>
+                        <div class="action-buttons">
+                            <input type="file" id="import-file" accept=".json" style="display: none;">
+                            <button id="import-data" class="btn btn-outline">Import JSON File</button>
+                        </div>
+                    </div>
+
+                    <div class="action-group danger">
+                        <h3>Clear Data</h3>
+                        <p>Permanently delete session data. This action cannot be undone.</p>
+                        <div class="action-buttons">
+                            <button id="clear-week" class="btn btn-danger">Clear Last Week</button>
+                            <button id="clear-month" class="btn btn-danger">Clear Last Month</button>
+                            <button id="clear-all" class="btn btn-danger">Clear All Data</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p>FocusZone v1.0.0</p>
+                <div class="footer-links">
+                    <a href="#" id="view-reports">View Reports</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="options.js"></script>
+</body>
+</html>
+

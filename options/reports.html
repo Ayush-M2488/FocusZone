@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FocusZone - Reports</title>
+    <link rel="stylesheet" href="options.css">
+    <link rel="stylesheet" href="reports.css">
+    <!-- Load Chart.js and date-fns locally (no CDN!) -->
+    <script src="../libs/chart.umd.min.js"></script>
+    <script src="../libs/date-fns.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Browser Session Reports</h1>
+            <nav>
+                <button class="nav-btn active" data-tab="overview">Overview</button>
+                <button class="nav-btn" data-tab="sessions">Sessions</button>
+                <button class="nav-btn" data-tab="websites">Websites</button>
+                <button class="nav-btn" data-tab="timeline">Timeline</button>
+            </nav>
+            <div class="header-controls">
+                <select id="date-range">
+                    <option value="today">Today</option>
+                    <option value="week">This Week</option>
+                    <option value="month">This Month</option>
+                    <option value="all">All Time</option>
+                </select>
+                <button id="export-report" class="btn btn-outline">Export Report</button>
+                <button id="back-to-settings" class="btn btn-secondary">Settings</button>
+            </div>
+        </header>
+
+        <main>
+        <div id="scheduledSessionWarning" style="display:none; background: #fef2f2; border: 1px solid #fecaca; padding: 10px; margin-bottom: 12px; border-radius: 6px; color: #991b1b;">
+  <strong>Scheduled session active.</strong> Your session was automatically started based on schedule.
+  <button id="dismissScheduledWarning" style="margin-left: 10px; background: #ef4444; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer;">Dismiss</button>
+</div>
+
+            <!-- Overview Tab -->
+            <section id="overview-tab" class="tab-content active">
+                <div class="stats-overview">
+                    <div class="stat-card">
+                        <div class="stat-icon">⏱️</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="total-time">0h 0m</div>
+                            <div class="stat-label">Total Time</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="total-sessions">0</div>
+                            <div class="stat-label">Sessions</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🌐</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="unique-sites">0</div>
+                            <div class="stat-label">Unique Sites</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📈</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="avg-session">0m</div>
+                            <div class="stat-label">Avg Session</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="charts-grid">
+                    <div class="chart-container">
+                        <h3>Session Types Distribution</h3>
+                        <canvas id="session-types-chart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3>Daily Activity</h3>
+                        <canvas id="daily-activity-chart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3>Top Websites</h3>
+                        <canvas id="top-websites-chart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3>Productivity Score</h3>
+                        <div class="productivity-score">
+                            <div class="score-circle" id="productivity-circle">
+                                <span id="productivity-value">0%</span>
+                            </div>
+                            <p id="productivity-description">Based on work/study vs break/personal time</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sessions Tab -->
+            <section id="sessions-tab" class="tab-content">
+                <div class="section-header">
+                    <h2>Session History</h2>
+                    <div class="filters">
+                        <select id="session-type-filter">
+                            <option value="all">All Types</option>
+                            <option value="work">Work</option>
+                            <option value="study">Study</option>
+                            <option value="break">Break</option>
+                            <option value="personal">Personal</option>
+                        </select>
+                        <input type="search" id="session-search" placeholder="Search sessions...">
+                    </div>
+                </div>
+                <div class="sessions-list" id="sessions-list">
+                    <!-- Sessions will be populated here -->
+                </div>
+                <div class="pagination" id="sessions-pagination">
+                    <!-- Pagination will be populated here -->
+                </div>
+            </section>
+
+            <!-- Websites Tab -->
+            <section id="websites-tab" class="tab-content">
+                <div class="section-header">
+                    <h2>Website Analytics</h2>
+                    <div class="filters">
+                        <select id="website-sort">
+                            <option value="time">Sort by Time</option>
+                            <option value="visits">Sort by Visits</option>
+                            <option value="name">Sort by Name</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="chart-container full-width">
+                    <h3>Website Time Distribution</h3>
+                    <canvas id="website-time-chart"></canvas>
+                </div>
+                <div class="websites-table">
+                    <table id="websites-table">
+                        <thead>
+                            <tr>
+                                <th>Website</th>
+                                <th>Total Time</th>
+                                <th>Visits</th>
+                                <th>Avg Session</th>
+                                <th>Last Visit</th>
+                            </tr>
+                        </thead>
+                        <tbody id="websites-table-body">
+                            <!-- Website data will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Timeline Tab -->
+            <section id="timeline-tab" class="tab-content">
+                <div class="section-header">
+                    <h2>Activity Timeline</h2>
+                    <div class="timeline-controls">
+                        <input type="date" id="timeline-date" />
+                        <button id="timeline-prev" class="btn btn-outline">← Previous</button>
+                        <button id="timeline-next" class="btn btn-outline">Next →</button>
+                    </div>
+                </div>
+                <div class="timeline-container">
+                    <div class="timeline-header">
+                        <div class="timeline-hours">
+                            <!-- Hour markers will be generated -->
+                        </div>
+                    </div>
+                    <div class="timeline-content" id="timeline-content">
+                        <!-- Timeline sessions will be populated here -->
+                    </div>
+                </div>
+                <div class="timeline-legend">
+                    <div class="legend-item">
+                        <div class="legend-color work"></div>
+                        <span>Work</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color study"></div>
+                        <span>Study</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color break"></div>
+                        <span>Break</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color personal"></div>
+                        <span>Personal</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p>FocusZone v1.0.0</p>
+                <div class="footer-links">
+                    <a href="#" id="refresh-data">Refresh Data</a>
+                    <a href="#" id="clear-filters">Clear Filters</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="reports.js"></script>
+</body>
+</html>

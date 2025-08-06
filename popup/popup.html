@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FocusZone</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Session Tracker</h1>
+            <div class="status-indicator" id="statusIndicator">
+                <span class="status-dot" id="statusDot"></span>
+                <span id="statusText">Inactive</span>
+            </div>
+        </header>
+
+        <main>
+            <!-- Session Controls -->
+            <section class="session-controls">
+                <div class="session-type-selector">
+                    <label for="sessionType">Session Type:</label>
+                    <select id="sessionType">
+                        <option value="work">Work</option>
+                        <option value="study">Study</option>
+                        <option value="break">Break</option>
+                        <option value="personal">Personal</option>
+                    </select>
+                </div>
+                
+                <div class="session-buttons">
+                    <button id="startSession" class="btn btn-primary">Start Session</button>
+                    <button id="stopSession" class="btn btn-secondary" disabled>Stop Session</button>
+                </div>
+            </section>
+
+            <!-- Current Session Info -->
+            <section class="current-session" id="currentSession" style="display: none;">
+                <h3>Current Session</h3>
+                <div class="session-info">
+                    <div class="info-item">
+                        <span class="label">Type:</span>
+                        <span id="currentType">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Duration:</span>
+                        <span id="currentDuration">00:00:00</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Current Site:</span>
+                        <span id="currentSite">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Sites Visited:</span>
+                        <span id="sitesCount">0</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Stats -->
+            <section class="quick-stats">
+                <h3>Today's Summary</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-value" id="todayTotal">0h 0m</span>
+                        <span class="stat-label">Total Time</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="todaySessions">0</span>
+                        <span class="stat-label">Sessions</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="todayTopSite">-</span>
+                        <span class="stat-label">Top Site</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Action Buttons -->
+            <section class="actions">
+                <button id="viewReports" class="btn btn-outline">View Reports</button>
+                <button id="openSettings" class="btn btn-outline">Settings</button>
+            </section>
+        </main>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>
+

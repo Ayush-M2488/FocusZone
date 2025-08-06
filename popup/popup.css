@@ -1,0 +1,269 @@
+/* --- Modern Dark Theme by Gemini --- */
+
+/* General Reset & Body Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 350px;
+    min-height: 500px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    /* Dark background for the main body */
+    background: #111827;
+    /* Light text color for high contrast */
+    color: #d1d5db;
+}
+
+.container {
+    padding: 16px;
+}
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    /* A subtle border to separate the header */
+    border-bottom: 1px solid #374151;
+}
+
+h1 {
+    font-size: 18px;
+    font-weight: 600;
+    /* Bright white for the main title */
+    color: #f9fafb;
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #9ca3af;
+    /* Softer text for status */
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    /* A neutral gray dot for the default state */
+    background: #4b5563;
+    transition: background-color 0.3s ease;
+}
+
+.status-dot.active {
+    /* A bright, vibrant green for 'active' state */
+    background: #4ade80;
+}
+
+.status-dot.warning {
+    /* A warm amber for 'warning' state */
+    background: #facc15;
+}
+
+/* Sections */
+section {
+    margin-bottom: 24px;
+}
+
+h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    /* Bright white for section titles */
+    color: #f9fafb;
+}
+
+/* Session Controls */
+.session-type-selector {
+    margin-bottom: 16px;
+}
+
+.session-type-selector label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    /* Softer gray for labels */
+    color: #9ca3af;
+}
+
+select {
+    width: 100%;
+    padding: 10px 12px;
+    /* A dark gray border */
+    border: 1px solid #4b5563;
+    border-radius: 6px;
+    font-size: 14px;
+    /* A darker background for the select input */
+    background-color: #1f2937;
+    /* Light text color */
+    color: #d1d5db;
+
+    /* Custom arrow for dark mode */
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.7rem center;
+    background-repeat: no-repeat;
+    background-size: 1.2em 1.2em;
+    padding-right: 2.5rem;
+}
+
+select:focus {
+    outline: none;
+    /* A vibrant indigo for focus state */
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.session-buttons {
+    display: flex;
+    gap: 12px;
+    /* Increased gap for better spacing */
+}
+
+/* Buttons */
+.btn {
+    flex: 1;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    /* Bolder font for buttons */
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.btn-primary {
+    /* Vibrant indigo for primary actions */
+    background: #6366f1;
+    color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+    /* A slightly darker indigo on hover */
+    background: #4f46e5;
+}
+
+.btn-secondary {
+    /* A clear, strong red for destructive actions */
+    background: #e11d48;
+    color: white;
+}
+
+.btn-secondary:hover:not(:disabled) {
+    /* A slightly darker red on hover */
+    background: #be123c;
+}
+
+.btn-outline {
+    background: transparent;
+    color: #d1d5db;
+    border: 1px solid #4b5563;
+}
+
+.btn-outline:hover:not(:disabled) {
+    /* A subtle background and brighter border on hover */
+    background: #374151;
+    border-color: #6b7280;
+}
+
+/* Current Session & Quick Stats Cards */
+.current-session,
+.quick-stats {
+    /* Slightly lighter dark background for cards */
+    background: #1f2937;
+    border: 1px solid #374151;
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.session-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+}
+
+.info-item .label {
+    color: #9ca3af;
+    /* Softer gray for labels */
+    font-weight: 500;
+}
+
+.info-item span:last-child {
+    font-weight: 600;
+    color: #f9fafb;
+    /* Bright white for data */
+}
+
+/* Quick Stats */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-value {
+    display: block;
+    font-size: 18px;
+    /* Larger font for emphasis */
+    font-weight: 700;
+    color: #f9fafb;
+    margin-bottom: 4px;
+}
+
+.stat-label {
+    font-size: 11px;
+    color: #9ca3af;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Actions */
+.actions {
+    display: flex;
+    gap: 12px;
+}
+
+/* Animations */
+@keyframes pulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(74, 222, 128, 0);
+    }
+}
+
+.status-dot.active {
+    /* Replaced opacity pulse with a more modern shadow pulse */
+    animation: pulse 2s infinite;
+}

@@ -1,4 +1,4 @@
-#FocusZone - Browser Session Tracker
+FocusZone - Browser Session Tracker
 
 A comprehensive Chrome extension for tracking and managing browser usage sessions with advanced analytics, website filtering, and scheduling features.
 
